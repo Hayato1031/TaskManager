@@ -1,0 +1,88 @@
+# Node Modules
+/node_modules
+**/node_modules
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency directories
+/.pnp
+.pnp.js
+
+# Next.js specific
+.next/
+out/
+
+# Next.js Build Output
+build/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Environment variables
+.env
+.env.*.local
+
+# MacOS specific
+.DS_Store
+
+# Temporary files
+*.swp
+*.swo
+
+# Rails specific
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# PID files
+/tmp/pids
+/tmp/pids/*
+
+# Ignore the log folder and all contents in it.
+log/*
+tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+
+# Ignore database files
+/db/*.sqlite3
+/db/*.sqlite3-journal
+/db/*.sqlite3-*
+
+# Ignore all the yarn specific files
+/yarn-error.log
+
+# Ignore other artifacts
+.byebug_history
+/.bundle
+/vendor/bundle
+/public/packs
+/public/packs-test
+/node_modules
+/yarn-error.log
+
+# Ignore rails master key and credentials
+/config/master.key
+/config/credentials.yml.enc
+
+# Ignore spring specific files
+.spring
+.sandbox
+
+# Ignore secrets
+/config/secrets.yml
+
+# Ignore test artifacts
+/spec/examples.txt
+/test/*.log
