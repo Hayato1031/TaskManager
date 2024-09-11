@@ -146,6 +146,7 @@ GEM
     nokogiri (1.16.7-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.5.8)
     psych (5.1.2)
       stringio
     puma (6.4.2)
@@ -193,7 +194,7 @@ GEM
     rake (13.2.1)
     rdoc (6.7.0)
       psych (>= 4.0.0)
-    reline (0.5.9)
+    reline (0.5.10)
       io-console (~> 0.5)
     responders (3.1.1)
       actionpack (>= 5.2)
@@ -244,6 +245,7 @@ DEPENDENCIES
   devise
   dotenv-rails
   jwt
+  pg
   puma (>= 5.0)
   rack-cors
   rails (~> 7.1.4)
