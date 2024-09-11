@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from 'next/head';
 import { useAuth } from "@/contexts/AuthContext";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Divider, Heading, Flex, Spacer } from "@yamada-ui/react";
 
@@ -28,6 +29,10 @@ export default function Layout({ children }) {
 
     return (
         <div>
+            <Head>
+                <title>Task Manager</title>
+                <meta name="description" content="Task Manager" />
+            </Head>
             <header>
                 <Flex w="full" gap="md" style={CSS.header}>
                     <Link href="/">
