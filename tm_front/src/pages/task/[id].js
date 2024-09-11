@@ -512,7 +512,6 @@ export default function Task() {
                   </Heading>
                 </AccordionLabel>
                 <AccordionPanel>
-                  <Divider />
                   {unapprovedDailyReports.length == 0 ? (
                     <Heading size="md">
                       未承認の進捗報告はありません。
@@ -573,7 +572,7 @@ export default function Task() {
                 <AccordionPanel>
                   {approvedDailyReports.length == 0 ? (
                     <Heading size="md">
-                      未承認の進捗報告はありません。
+                      承認済みの進捗報告はありません。
                     </Heading>
                   ) : (
                     approvedDailyReports.map((daily_report) => (
