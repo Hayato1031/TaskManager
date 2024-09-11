@@ -24,13 +24,14 @@ export default function Home() {
           </Heading>
         </CarouselSlide>
         <CarouselSlide as={Center} bg="secondary">
-          2
+          <Heading color="white">
+            日々の進捗を管理しよう
+          </Heading>
         </CarouselSlide>
         <CarouselSlide as={Center} bg="warning">
-          3
-        </CarouselSlide>
-        <CarouselSlide as={Center} bg="danger">
-          4
+          <Heading color="white">
+            進捗にコメントを付けてみよう
+          </Heading>
         </CarouselSlide>
       </Carousel>
 
