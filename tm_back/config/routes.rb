@@ -1,10 +1,27 @@
+# config/routes.rb
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  # Defines the root path route ("/")
-  # root "posts#index"
+  namespace :api do
+    namespace :v1 do
+      devise_for :users, controllers: {
+        confirmations: 'api/v1/confirmations',
+        passwords: 'api/v1/passwords',
+        registrations: 'api/v1/registrations'
+      }
+      post "/register", to: "auth#register"
+      post "/login", to: "auth#login"
+      get 'auth/validate_token', to: 'auth#validate_token'
+      resources :users, only: [] do
+        patch 'update_username', on: :collection
+        patch 'update_email', on: :collection
+        patch 'update_password', on: :collection
+        delete 'destroy', on: :collection
+      end
+
+      resources :tasks
+      resources :daily_reports
+      resources :comments
+    end
+  end
 end

@@ -9,8 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@yamada-ui/calendar": "^1.7.0",
     "@yamada-ui/carousel": "^2.0.3",
+    "@yamada-ui/dropzone": "^1.0.42",
+    "@yamada-ui/lucide": "^1.4.0",
     "@yamada-ui/react": "^1.5.0",
+    "axios": "^1.7.7",
+    "js-cookie": "^3.0.5",
     "next": "14.2.7",
     "react": "^18",
     "react-dom": "^18"

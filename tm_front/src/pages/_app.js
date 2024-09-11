@@ -2,6 +2,7 @@
 import "@/styles/globals.css";
 import { UIProvider, Box } from "@yamada-ui/react";
 import Layout from "@/components/Layout";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 // Define keyframes in a global CSS file or within a style tag
 const keyframes = `
@@ -37,7 +38,7 @@ export default function App({ Component, pageProps }) {
       backgroundImage: `
         radial-gradient(at 77% 20%, hsla(155,60%,77%,1) 0px, transparent 50%),
         radial-gradient(at 66% 80%, hsla(252,89%,78%,1) 0px, transparent 50%),
-        radial-gradient(at 90% 52%, hsla(35,83%,74%,1) 0px, transparent 20%)`,
+        radial-gradient(at 90% 52%, hsla(110,83%,74%,1) 0px, transparent 20%)`,
       backgroundSize: "250% 250%",
       animation: "gra 15.0s infinite alternate ease-in-out",
     },
@@ -49,10 +50,12 @@ export default function App({ Component, pageProps }) {
   // Render the UI with the background and layout components
   return (
     <UIProvider>
-      <Box style={CSS.box} />
-      <Layout>
-        <Component {...pageProps} style={CSS.component} />
-      </Layout>
+      <AuthProvider>
+        <Box style={CSS.box} />
+        <Layout>
+          <Component {...pageProps} style={CSS.component} />
+        </Layout>
+      </AuthProvider>
     </UIProvider>
   );
 }

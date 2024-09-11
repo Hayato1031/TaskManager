@@ -1,7 +1,10 @@
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, Divider, Heading, Flex, Spacer } from "@yamada-ui/react";
 
 export default function Layout({ children }) {
+    const { isLoggedIn, loading, logout, user } = useAuth();
+
     const CSS = {
         header: {
             alignItems: "center",
@@ -19,6 +22,10 @@ export default function Layout({ children }) {
         },
     }
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <div>
             <header>
@@ -29,20 +36,31 @@ export default function Layout({ children }) {
                         </Heading>
                     </Link>
                     <Spacer />
-                    <Breadcrumb>
-                        <BreadcrumbItem>
-                            <Link href="/">ホーム</Link>
-                        </BreadcrumbItem>
-                        <BreadcrumbItem>
-                            <Link href="/task/list">管理タスク一覧</Link>
-                        </BreadcrumbItem>
-                        <BreadcrumbItem>
-                            <Link href="/account/login">ログイン</Link>
-                        </BreadcrumbItem>
-                        <BreadcrumbItem>
-                            <Link href="/account/signup">新規登録</Link>
-                        </BreadcrumbItem>
-                    </Breadcrumb>
+                    {isLoggedIn ? (
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link href="/account/profile">こんにちは、{user?.name}さん</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link href="/task/list">管理タスク一覧</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link href="/" onClick={logout}>ログアウト</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    ):(
+                        <Breadcrumb>
+                            <BreadcrumbItem>
+                                <Link href="/">ホーム</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link href="/account/login">ログイン</Link>
+                            </BreadcrumbItem>
+                            <BreadcrumbItem>
+                                <Link href="/account/signup">新規登録</Link>
+                            </BreadcrumbItem>
+                        </Breadcrumb>
+                    )}  
                 </Flex>
             </header>
             <Divider />
