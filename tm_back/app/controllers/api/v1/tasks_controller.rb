@@ -19,10 +19,18 @@ module Api
       end
 
       def show
-        task = Task.find_by(id: params[:id])
-        admin = task.user
-        daily_reports = task.daily_reports
+        task = Task.includes(daily_reports: :comments).find_by(id: params[:id]) # daily_reportsとcommentsを含めて取得
         if task
+          admin = task.user
+          daily_reports = task.daily_reports.map do |report|
+            {
+              id: report.id,
+              date: report.date,
+              summary: report.summary,
+              approved: report.approved,
+              comments: report.comments # commentsを含める
+            }
+          end
           render json: { success: true, task: task, admin: admin, daily_reports: daily_reports }, status: :ok
         else
           render json: { success: false, error: 'Task not found' }, status: :not_found

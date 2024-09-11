@@ -552,7 +552,7 @@ export default function Task() {
                                   未承認
                                 </Box>
                                 <Box>
-                                  コメント数
+                                  コメント数:{daily_report.comments.length}
                                 </Box>
                               </Flex>
                             </Box>
@@ -594,12 +594,12 @@ export default function Task() {
                           </Box>
                           {daily_report.approved ? (
                             <Box p="md">
-                              <Flex direction="center">
+                              <Flex direction="column">
                                 <Box>
                                   承認済み
                                 </Box>
                                 <Box>
-                                  コメント数
+                                  コメント数:{daily_report.comments.length}
                                 </Box>
                               </Flex>
                             </Box>
