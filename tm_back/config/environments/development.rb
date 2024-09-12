@@ -3,6 +3,9 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  Rails.application.config.hosts << ENV['BACKEND_URL'] if ENV['BACKEND_URL'].present?
+  Rails.application.config.hosts << ENV['FRONTEND_URL'] if ENV['FRONTEND_URL'].present?
+
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
