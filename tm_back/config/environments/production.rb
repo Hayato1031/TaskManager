@@ -6,6 +6,9 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.enable_reloading = false
 
+  Rails.application.config.hosts << ENV['BACKEND_URL'] if ENV['BACKEND_URL'].present?
+  Rails.application.config.hosts << ENV['FRONTEND_URL'] if ENV['FRONTEND_URL'].present?
+
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
