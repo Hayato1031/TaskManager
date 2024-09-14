@@ -338,7 +338,7 @@ export default function DailyTask() {
                                                 <Box>
                                                     <Flex align="center">
                                                         <Heading size="md" p="md">
-                                                            {comment.admin ? admin.name : comment.user}
+                                                            {comment.admin ? comment.admin.name : comment.user ? comment.user.name : "不明"} {/* デフォルト値を設定 */}
                                                         </Heading>
                                                         <Spacer />
                                                         <Heading size="md" p="md">
