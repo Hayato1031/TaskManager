@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Center, Divider, Flex, FormControl, Heading, Input, SegmentedControl, SegmentedControlButton, Spacer, Tabs, Tab, TabPanel, Textarea, useDisclosure, Modal, ModalHeader, ModalBody, ModalFooter,} from "@yamada-ui/react";
+import { Box, Button, Center, Divider, Flex, FormControl, Heading, IconButton, Input, SegmentedControl, SegmentedControlButton, Spacer, Tabs, Tab, TabPanel, Textarea, useDisclosure, Menu, MenuButton, MenuList, MenuItem, Modal, ModalHeader, ModalBody, ModalFooter} from "@yamada-ui/react";
 import { DatePicker } from "@yamada-ui/calendar"
 import Link from 'next/link';
-import { Divide } from '@yamada-ui/lucide';
+import { Divide, MenuIcon } from '@yamada-ui/lucide';
 import { useAuth } from '@/contexts/AuthContext';
 
 export default function DailyTask() {
@@ -36,38 +36,37 @@ export default function DailyTask() {
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-    // ... 省略 ...
+    useEffect(() => {
+        if(dailyTask_id){
+            axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/daily_reports/${dailyTask_id}`)
+            .then((response) => {   
+                if(response.data.status){
+                    const data = response.data.data;
+                    setDailyTask(data);
+                    setTask(response.data.task);
 
-useEffect(() => {
-    if(dailyTask_id){
-        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/daily_reports/${dailyTask_id}`)
-        .then((response) => {   
-            if(response.data.status){
-                const data = response.data.data;
-                setDailyTask(data);
-                setTask(response.data.task);
+                    // dailyTask ではなく data を使用
+                    setSummary(data.summary);
+                    setContent(data.content);
+                    setNotice(data.notice);
+                    setNextAction(data.next_action);
+                    setStatus("loaded");
 
-                // dailyTask ではなく data を使用
-                setSummary(data.summary);
-                setContent(data.content);
-                setNotice(data.notice);
-                setNextAction(data.next_action);
-                setStatus("loaded");
+                    setAdmin(response.data.admin || {}); // adminがnullの場合は空オブジェクトを設定
+                    setComments(response.data.comments);
 
-                setAdmin(response.data.admin || {}); // adminがnullの場合は空オブジェクトを設定
-                setComments(response.data.comments);
-            } else {
+                    console.log(dailyTask);
+                } else {
+                    setStatus("loaded"); // エラーハンドリング
+                }
+            })
+            .catch((error) => {
+                console.log(error);
                 setStatus("loaded"); // エラーハンドリング
-            }
-        })
-        .catch((error) => {
-            console.log(error);
-            setStatus("loaded"); // エラーハンドリング
-        });
-    }
-}, [dailyTask_id]);
+            });
+        }
+    }, [dailyTask_id]);
 
-// ... 省略 ...
 
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
@@ -150,6 +149,20 @@ useEffect(() => {
         };
         return date.toLocaleString('ja-JP', options);
     };
+
+    const handleCommentDelete = async (commentId) => {
+        try {
+            const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/comments/${commentId}`);
+            if (response.data.status) {
+                // コメントを削除した後、コメントリストを更新
+                setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
+            } else {
+                console.log("コメントの削除に失敗しました。");
+            }
+        } catch (error) {
+            console.log("削除エラー:", error);
+        }
+    };
     
     const CSS = {
         box: {
@@ -206,7 +219,7 @@ useEffect(() => {
                                                 ステータス:
                                             </Heading>
                                             <Box p="md">
-                                                {dailyTask.status ? "承認済み" : "未承認"}
+                                                {dailyTask.approved ? "承認済み" : "未承認"}
                                             </Box>
                                         </Flex>
                                         <Divider />
@@ -333,35 +346,48 @@ useEffect(() => {
                                 コメント
                             </Heading>
                             <Divider />
-                            <Center p="md">
+                            <Flex direction="column">
                                 {comments && comments.length > 0 ? (
                                     comments.map((comment) => (
-                                        <Box key={comment.id} p="md" style={CSS.box}>
-                                            <Box>
+                                        <Center>
+                                            <Box key={comment.id} p="md" style={CSS.box}>
                                                 <Box>
-                                                    <Flex align="center">
-                                                        <Heading size="md" p="md">
-                                                            {admin ? admin.name : comment.user ? comment.user.name : "不明"} {/* デフォルト値を設定 */}
-                                                        </Heading>
-                                                        <Spacer />
-                                                        <Heading size="md" p="md">
-                                                            {formatDateToJST(comment.created_at)}
-                                                        </Heading>
-                                                    </Flex>
-                                                </Box>
-                                                <Divider />
-                                                <Box p="md">
-                                                    {comment.content}
+                                                    <Box>
+                                                        <Flex align="center">
+                                                            <Heading size="md" p="md">
+                                                                {admin ? admin.name : comment.user ? comment.user.name : "不明"} {/* デフォルト値を設定 */}
+                                                            </Heading>
+                                                            <Spacer />
+                                                            <Heading size="md" p="md">
+                                                                {formatDateToJST(comment.created_at)}
+                                                            </Heading>
+                                                            <Menu>
+                                                                <MenuButton
+                                                                    as={IconButton}
+                                                                    icon={<MenuIcon fontSize="2xl" />}
+                                                                    variant="outline"
+                                                                    colorScheme="white"
+                                                                />
+                                                                <MenuList>
+                                                                    <MenuItem color="black" onClick={() => handleCommentDelete(comment.id)}>コメントを削除</MenuItem>
+                                                                </MenuList>
+                                                            </Menu>
+                                                        </Flex>
+                                                    </Box>
+                                                    <Divider />
+                                                    <Box p="md">
+                                                        {comment.content}
+                                                    </Box>
                                                 </Box>
                                             </Box>
-                                        </Box>
+                                        </Center>
                                     ))
                                 ) : (
                                     <Box p="md">
                                         コメントはありません。
                                     </Box>
                                 )}
-                            </Center>
+                            </Flex>
                         </Box>
 
                         <Button onClick={onOpen} style={CSS.button}>コメント投稿</Button>

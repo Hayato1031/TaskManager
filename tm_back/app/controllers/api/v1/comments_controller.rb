@@ -12,6 +12,13 @@ module Api
                 end
             end
 
+            def destroy
+                comment = Comment.find(params[:id])
+                comment.destroy
+                render json: {status: true, message: 'Deleted comment', data: comment}, status: :ok
+            end
+
+
             private
             def comment_params
                 params.require(:comment).permit(:content, :admin, :daily_report)
