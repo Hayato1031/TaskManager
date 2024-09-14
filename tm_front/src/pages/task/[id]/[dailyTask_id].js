@@ -30,41 +30,44 @@ export default function DailyTask() {
     const [comments, setComments] = useState(null);
 
     const auth = task && user && task.user_id === user.id; // user が null でないことを確認
-    const postUser = auth ? admin.name : (task ? task.user.name : ""); // task が null の場合のデフォルト値を設定
+    const postUser = auth ? (admin ? admin.name : "不明") : (task ? task.member : ""); // task と task.user の存在を確認
 
     const [commentData, setCommentData] = useState("");
 
     const { isOpen, onOpen, onClose } = useDisclosure()
 
-    useEffect(() => {
-        if(dailyTask_id){
-            axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/daily_reports/${dailyTask_id}`)
-            .then((response) => {   
-                if(response.data.status){
-                    const data = response.data.data;
-                    setDailyTask(data);
-                    setTask(response.data.task);
-    
-                    // dailyTask ではなく data を使用
-                    setSummary(data.summary);
-                    setContent(data.content);
-                    setNotice(data.notice);
-                    setNextAction(data.next_action);
-                    setStatus("loaded");
-    
-                    setAdmin(response.data.admin || {}); // adminがnullの場合は空オブジェクトを設定
-                    setComments(response.data.comments);
-                    console.log(response);
-                } else {
-                    setStatus("loaded"); // エラーハンドリング
-                }
-            })
-            .catch((error) => {
-                console.log(error);
+    // ... 省略 ...
+
+useEffect(() => {
+    if(dailyTask_id){
+        axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/daily_reports/${dailyTask_id}`)
+        .then((response) => {   
+            if(response.data.status){
+                const data = response.data.data;
+                setDailyTask(data);
+                setTask(response.data.task);
+
+                // dailyTask ではなく data を使用
+                setSummary(data.summary);
+                setContent(data.content);
+                setNotice(data.notice);
+                setNextAction(data.next_action);
+                setStatus("loaded");
+
+                setAdmin(response.data.admin || {}); // adminがnullの場合は空オブジェクトを設定
+                setComments(response.data.comments);
+            } else {
                 setStatus("loaded"); // エラーハンドリング
-            });
-        }
-    }, [dailyTask_id]);
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+            setStatus("loaded"); // エラーハンドリング
+        });
+    }
+}, [dailyTask_id]);
+
+// ... 省略 ...
 
     const handleUpdateSubmit = async (e) => {
         e.preventDefault();
