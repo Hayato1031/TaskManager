@@ -41,18 +41,18 @@ export default function DailyTask() {
             axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/v1/daily_reports/${dailyTask_id}`)
             .then((response) => {   
                 if(response.data.status){
-                    const data = response.data.data; // 変数に格納
+                    const data = response.data.data;
                     setDailyTask(data);
                     setTask(response.data.task);
-
+    
                     // dailyTask ではなく data を使用
                     setSummary(data.summary);
                     setContent(data.content);
                     setNotice(data.notice);
                     setNextAction(data.next_action);
                     setStatus("loaded");
-
-                    setAdmin(response.data.admin);
+    
+                    setAdmin(response.data.admin || {}); // adminがnullの場合は空オブジェクトを設定
                     setComments(response.data.comments);
                     console.log(response);
                 } else {
