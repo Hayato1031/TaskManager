@@ -65,7 +65,7 @@ export default function DailyTask() {
                 setStatus("loaded"); // エラーハンドリング
             });
         }
-    }, [dailyTask_id]);
+    }, [dailyTask_id, dailyTask]);
 
 
     const handleUpdateSubmit = async (e) => {
@@ -349,8 +349,8 @@ export default function DailyTask() {
                             <Flex direction="column">
                                 {comments && comments.length > 0 ? (
                                     comments.map((comment) => (
-                                        <Center>
-                                            <Box key={comment.id} p="md" style={CSS.box}>
+                                        <Center key={comment.id}>
+                                            <Box p="md" style={CSS.box}>
                                                 <Box>
                                                     <Box>
                                                         <Flex align="center">
