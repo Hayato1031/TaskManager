@@ -325,22 +325,25 @@ export default function DailyTask() {
                             </Box>
                         </Center>
 
-                        <Box p="xl">
-                            <Heading size="lg" p="md">
-                                承認確認
-                            </Heading>
-                            <Divider />
-                            <Center>
-                                <SegmentedControl variant="rounded" p="md" m="md" size="lg" defaultValue={dailyTask.approved ? "承認済み" : "未承認"} onChange={handleApproved}>
-                                    <SegmentedControlButton value="承認済み" color="white">
+                        {auth && (
+                            <Box p="xl">
+                                <Heading size="lg" p="md">
+                                    承認確認
+                                </Heading>
+                                <Divider />
+                                <Center>
+                                    <SegmentedControl variant="rounded" p="md" m="md" size="lg" defaultValue={dailyTask.approved ? "承認済み" : "未承認"} onChange={handleApproved}>
+                                        <SegmentedControlButton value="承認済み" color="white">
                                             承認済み
-                                    </SegmentedControlButton>
-                                    <SegmentedControlButton value="未承認" color="white">
+                                        </SegmentedControlButton>
+                                        <SegmentedControlButton value="未承認" color="white">
                                             未承認
-                                    </SegmentedControlButton>
-                                </SegmentedControl>
-                            </Center>
-                        </Box>
+                                        </SegmentedControlButton>
+                                    </SegmentedControl>
+                                </Center>
+                            </Box>
+                        )}
+
                         <Box p="xl">
                             <Heading size="lg" p="md">
                                 コメント
