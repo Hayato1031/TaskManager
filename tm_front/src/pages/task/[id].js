@@ -504,7 +504,7 @@ export default function Task() {
               進捗報告
             </Heading>
             <Divider />
-            <Accordion p="md" isToggle defaultIndex={1}>
+            <Accordion p="md" isToggle>
               <AccordionItem borderTop="none">
                 <AccordionLabel>
                   <Heading size="xl">
