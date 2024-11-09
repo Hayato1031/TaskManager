@@ -433,10 +433,10 @@ export default function Task() {
 
                         <TabPanel>
                           <Flex p="md">
-                            <Box p="md" width="20%">
+                            <Box p="md" width="20%" flex="1">
                               タスクステータス:
                             </Box>
-                            <Box p="md">
+                            <Box p="md" flex="3">
                               {task.status ? "進行中" : "終了済み"}
                             </Box>
                           </Flex>
@@ -444,10 +444,10 @@ export default function Task() {
                             <>
                               <Divider />
                               <Flex p="md">
-                                <Box p="md" width="20%">
+                                <Box p="md" width="20%" flex="1">
                                   目標:
                                 </Box>
-                                <Box p="md">
+                                <Box p="md" flex="3">
                                   {task.goal}
                                 </Box>
                               </Flex>
@@ -457,10 +457,10 @@ export default function Task() {
                             <>
                               <Divider />
                               <Flex p="md">
-                                <Box p="md" width="20%">
+                                <Box p="md" width="20%" flex="1">
                                   説明:
                                 </Box>
-                                <Box p="md">
+                                <Box p="md" flex="3">
                                   {task.description}
                                 </Box>
                               </Flex>

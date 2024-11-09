@@ -215,28 +215,28 @@ export default function DailyTask() {
                                 
                                     <TabPanel>
                                         <Flex p="md" align="center">
-                                            <Heading size="md" p="md">
+                                            <Heading size="md" p="md" flex="1">
                                                 ステータス:
                                             </Heading>
-                                            <Box p="md">
+                                            <Box p="md" flex="3">
                                                 {dailyTask.approved ? "承認済み" : "未承認"}
                                             </Box>
                                         </Flex>
                                         <Divider />
                                         <Flex p="md" align="center">
-                                            <Heading size="md" p="md">
+                                            <Heading size="md" p="md" flex="1">
                                                 概要:
                                             </Heading>
-                                            <Box p="md">
+                                            <Box p="md" flex="3">
                                                 {dailyTask.summary}
                                             </Box>
                                         </Flex>
                                         <Divider />
                                         <Flex p="md" align="center">
-                                            <Heading size="md" p="md">
+                                            <Heading size="md" p="md" flex="1">
                                                 詳細:
                                             </Heading>
-                                            <Box p="md">
+                                            <Box p="md" flex="3">
                                                 {dailyTask.content}
                                             </Box>
                                         </Flex>
@@ -244,10 +244,10 @@ export default function DailyTask() {
                                             <>
                                                 <Divider />
                                                 <Flex p="md" align="center">
-                                                    <Heading size="md" p="md">
+                                                    <Heading size="md" p="md" flex="1">
                                                         気づき:
                                                     </Heading>
-                                                    <Box p="md">
+                                                    <Box p="md" flex="3">
                                                         {dailyTask.notice}
                                                     </Box>
                                                 </Flex>
@@ -259,10 +259,10 @@ export default function DailyTask() {
                                             <>
                                                 <Divider />
                                                 <Flex p="md" align="center">
-                                                    <Heading size="md" p="md">
+                                                    <Heading size="md" p="md" flex="1">
                                                         ネクストアクション:
                                                     </Heading>
-                                                    <Box p="md">
+                                                    <Box p="md" flex="3">
                                                         {dailyTask.next_action}
                                                     </Box>
                                                 </Flex>
